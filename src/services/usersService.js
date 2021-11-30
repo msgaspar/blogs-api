@@ -47,7 +47,6 @@ const getById = async (id) => {
   const user = await User.findByPk(id, {
     attributes: ['id', 'displayName', 'email', 'image'],
   });
-  console.log(user);
   if (!user) {
     throw new AppError(404, 'User does not exist');
   }

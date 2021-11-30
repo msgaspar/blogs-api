@@ -36,4 +36,26 @@ const listAll = async () =>
     ],
   });
 
-module.exports = { create, listAll };
+const getById = async (id) => {
+  const post = await BlogPost.findByPk(id, {
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: ['id', 'displayName', 'email', 'image'],
+      },
+      {
+        model: Category,
+        as: 'categories',
+        attributes: ['id', 'name'],
+        through: { attributes: [] },
+      },
+    ],
+  });
+
+  if (!post) throw new AppError(404, 'Post does not exist');
+
+  return post;
+};
+
+module.exports = { create, listAll, getById };

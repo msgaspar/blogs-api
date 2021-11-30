@@ -15,7 +15,7 @@ router.post('/categories', authMiddleware, categoriesController.create);
 router.get('/categories', authMiddleware, categoriesController.list);
 router.post('/post', authMiddleware, postsController.create);
 router.get('/post', authMiddleware, postsController.list);
-router.get('/post/:id', () => {});
+router.get('/post/:id', authMiddleware, postsController.getById);
 router.put('/post/:id', () => {});
 router.delete('/post/:id', () => {});
 router.delete('/user/me', authMiddleware, usersController.deleteUser);
