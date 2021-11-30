@@ -16,7 +16,7 @@ router.get('/post', () => {});
 router.get('/post/:id', () => {});
 router.put('/post/:id', () => {});
 router.delete('/post/:id', () => {});
-router.delete('/user/me', () => {});
+router.delete('/user/me', authMiddleware, usersController.deleteUser);
 router.get('/post/search', () => {});
 
 module.exports = router;

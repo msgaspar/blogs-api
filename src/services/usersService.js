@@ -38,7 +38,10 @@ const login = async ({ email, password }) => {
 const listAll = async () =>
   User.findAll({ attributes: ['id', 'displayName', 'email', 'image'] });
 
-const getByEmail = async (email) => User.findOne({ where: { email } });
+const getByEmail = async (email) => {
+  const { dataValues } = await User.findOne({ where: { email } });
+  return dataValues;
+};
 
 const getById = async (id) => {
   const user = await User.findByPk(id, {
@@ -51,4 +54,6 @@ const getById = async (id) => {
   return user;
 };
 
-module.exports = { create, login, listAll, getByEmail, getById };
+const deleteUser = (id) => User.destroy({ where: { id } });
+
+module.exports = { create, login, listAll, getByEmail, getById, deleteUser };
