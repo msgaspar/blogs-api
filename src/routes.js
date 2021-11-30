@@ -17,7 +17,7 @@ router.post('/post', authMiddleware, postsController.create);
 router.get('/post', authMiddleware, postsController.list);
 router.get('/post/:id', authMiddleware, postsController.getById);
 router.put('/post/:id', authMiddleware, postsController.update);
-router.delete('/post/:id', () => {});
+router.delete('/post/:id', authMiddleware, postsController.deletePost);
 router.delete('/user/me', authMiddleware, usersController.deleteUser);
 router.get('/post/search', () => {});
 

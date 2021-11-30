@@ -33,4 +33,11 @@ const update = rescue(async (request, response) => {
   response.status(200).json(updatedPost);
 });
 
-module.exports = { create, list, getById, update };
+const deletePost = rescue(async (request, response) => {
+  const { id: postId } = request.params;
+  const { id: userId } = request.user;
+  await postsService.deletePost({ postId, userId });
+  response.status(204).send();
+});
+
+module.exports = { create, list, getById, update, deletePost };

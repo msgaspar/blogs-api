@@ -70,4 +70,12 @@ const update = async ({ title, content, categoryIds, userId, postId }) => {
   return getById(postId);
 };
 
-module.exports = { create, listAll, getById, update };
+const deletePost = async ({ postId, userId }) => {
+  const findPost = await BlogPost.findByPk(postId);
+  if (!findPost) throw new AppError(404, 'Post does not exist');
+  if (findPost.userId !== userId) throw new AppError(401, 'Unauthorized user');
+
+  await BlogPost.destroy({ where: { id: postId } });
+};
+
+module.exports = { create, listAll, getById, update, deletePost };
