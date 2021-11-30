@@ -9,4 +9,6 @@ const create = async ({ name }) => {
   return { id, name };
 };
 
-module.exports = { create };
+const listAll = async () => Category.findAll({ attributes: ['id', 'name'] });
+
+module.exports = { create, listAll };

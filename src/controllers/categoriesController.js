@@ -7,4 +7,9 @@ const create = rescue(async (request, response) => {
   response.status(201).send(category);
 });
 
-module.exports = { create };
+const list = rescue(async (_request, response) => {
+  const categories = await categoriesService.listAll();
+  response.status(200).json(categories);
+});
+
+module.exports = { create, list };

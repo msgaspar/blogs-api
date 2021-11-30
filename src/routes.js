@@ -11,7 +11,7 @@ router.post('/login', usersController.login);
 router.get('/user', authMiddleware, usersController.list);
 router.get('/user/:id', authMiddleware, usersController.getById);
 router.post('/categories', authMiddleware, categoriesController.create);
-router.get('/categories', () => {});
+router.get('/categories', authMiddleware, categoriesController.list);
 router.post('/post', () => {});
 router.get('/post', () => {});
 router.get('/post/:id', () => {});
