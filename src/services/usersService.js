@@ -40,4 +40,15 @@ const listAll = async () =>
 
 const getByEmail = async (email) => User.findOne({ where: { email } });
 
-module.exports = { create, login, listAll, getByEmail };
+const getById = async (id) => {
+  const user = await User.findByPk(id, {
+    attributes: ['id', 'displayName', 'email', 'image'],
+  });
+  console.log(user);
+  if (!user) {
+    throw new AppError(404, 'User does not exist');
+  }
+  return user;
+};
+
+module.exports = { create, login, listAll, getByEmail, getById };

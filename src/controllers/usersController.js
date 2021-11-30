@@ -18,4 +18,10 @@ const list = rescue(async (_request, response) => {
   response.status(200).json(users);
 });
 
-module.exports = { create, login, list };
+const getById = rescue(async (request, response) => {
+  const { id } = request.params;
+  const user = await usersService.getById(id);
+  response.status(200).json(user);
+});
+
+module.exports = { create, login, list, getById };

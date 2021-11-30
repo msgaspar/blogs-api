@@ -8,7 +8,7 @@ const router = Router();
 router.post('/user', usersController.create);
 router.post('/login', usersController.login);
 router.get('/user', authMiddleware, usersController.list);
-router.get('/user/:id', () => {});
+router.get('/user/:id', authMiddleware, usersController.getById);
 router.post('/categories', () => {});
 router.get('/categories', () => {});
 router.post('/post', () => {});
