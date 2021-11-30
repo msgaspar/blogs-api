@@ -13,4 +13,9 @@ const login = rescue(async (request, response) => {
   response.status(200).json({ token });
 });
 
-module.exports = { create, login };
+const list = rescue(async (_request, response) => {
+  const users = await usersService.listAll();
+  response.status(200).json(users);
+});
+
+module.exports = { create, login, list };

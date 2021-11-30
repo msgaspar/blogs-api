@@ -1,5 +1,9 @@
 const { AppError } = require('../errors/AppError');
-const { validatePassword, validateEmail, validateDisplayName } = require('../utils/validation');
+const {
+  validatePassword,
+  validateEmail,
+  validateDisplayName,
+} = require('../utils/validation');
 const { generateToken } = require('../utils/jwt');
 const { User } = require('../models');
 
@@ -14,7 +18,7 @@ const create = async ({ displayName, email, password, image }) => {
   }
 
   const user = await User.create({ displayName, email, password, image });
-  
+
   return generateToken(user.email);
 };
 
@@ -31,4 +35,9 @@ const login = async ({ email, password }) => {
   return generateToken(user.email);
 };
 
-module.exports = { create, login };
+const listAll = async () =>
+  User.findAll({ attributes: ['id', 'displayName', 'email', 'image'] });
+
+const getByEmail = async (email) => User.findOne({ where: { email } });
+
+module.exports = { create, login, listAll, getByEmail };
