@@ -8,4 +8,9 @@ const create = rescue(async (request, response) => {
   response.status(201).send(post);
 });
 
-module.exports = { create };
+const list = rescue(async (_request, response) => {
+  const posts = await postsService.listAll();
+  response.status(200).json(posts);
+});
+
+module.exports = { create, list };
