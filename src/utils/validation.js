@@ -4,10 +4,10 @@ const validateEmail = (email) => {
   const regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   if (email === undefined) {
     throw new AppError(400, '"email" is required');
-  } 
+  }
   if (email === '') {
     throw new AppError(400, '"email" is not allowed to be empty');
-  } 
+  }
   if (!regex.test(email)) {
     throw new AppError(400, '"email" must be a valid email');
   }
@@ -31,4 +31,15 @@ const validatePassword = (password) => {
   }
 };
 
-module.exports = { validateDisplayName, validateEmail, validatePassword };
+const validateUpdatePostInputs = ({ title, content, categoryIds }) => {
+  if (!title) throw new AppError(400, '"title" is required');
+  if (!content) throw new AppError(400, '"content" is required');
+  if (categoryIds) throw new AppError(400, 'Categories cannot be edited');
+};
+
+module.exports = {
+  validateDisplayName,
+  validateEmail,
+  validatePassword,
+  validateUpdatePostInputs,
+};

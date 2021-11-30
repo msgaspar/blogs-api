@@ -19,4 +19,18 @@ const getById = rescue(async (request, response) => {
   response.status(200).json(post);
 });
 
-module.exports = { create, list, getById };
+const update = rescue(async (request, response) => {
+  const { title, content, categoryIds } = request.body;
+  const { id: postId } = request.params;
+  const { id: userId } = request.user;
+  const updatedPost = await postsService.update({
+    title,
+    content,
+    categoryIds,
+    postId,
+    userId,
+  });
+  response.status(200).json(updatedPost);
+});
+
+module.exports = { create, list, getById, update };

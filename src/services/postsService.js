@@ -1,6 +1,7 @@
 const { Op } = require('sequelize');
 const { BlogPost, Category, User } = require('../models');
 const { AppError } = require('../errors/AppError');
+const { validateUpdatePostInputs } = require('../utils/validation');
 
 const create = async ({ title, content, categoryIds, userId }) => {
   const props = { title, content, categoryIds };
@@ -58,4 +59,15 @@ const getById = async (id) => {
   return post;
 };
 
-module.exports = { create, listAll, getById };
+const update = async ({ title, content, categoryIds, userId, postId }) => {
+  validateUpdatePostInputs({ title, content, categoryIds });
+
+  const findPost = await BlogPost.findByPk(postId);
+  if (!findPost) throw new AppError(404, 'Post not found');
+  if (findPost.userId !== userId) throw new AppError(401, 'Unauthorized user');
+
+  await BlogPost.update({ title, content }, { where: { id: postId } });
+  return getById(postId);
+};
+
+module.exports = { create, listAll, getById, update };
