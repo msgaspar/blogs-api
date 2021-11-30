@@ -40,4 +40,10 @@ const deletePost = rescue(async (request, response) => {
   response.status(204).send();
 });
 
-module.exports = { create, list, getById, update, deletePost };
+const search = rescue(async (request, response) => {
+  const { q } = request.query;
+  const results = await postsService.search({ searchText: q });
+  response.status(200).json(results);
+});
+
+module.exports = { create, list, getById, update, deletePost, search };

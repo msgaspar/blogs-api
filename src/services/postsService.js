@@ -3,6 +3,20 @@ const { BlogPost, Category, User } = require('../models');
 const { AppError } = require('../errors/AppError');
 const { validateUpdatePostInputs } = require('../utils/validation');
 
+const includeOptions = [
+  {
+    model: User,
+    as: 'user',
+    attributes: ['id', 'displayName', 'email', 'image'],
+  },
+  {
+    model: Category,
+    as: 'categories',
+    attributes: ['id', 'name'],
+    through: { attributes: [] },
+  },
+];
+
 const create = async ({ title, content, categoryIds, userId }) => {
   const props = { title, content, categoryIds };
   Object.entries(props).forEach(([key, value]) => {
@@ -22,36 +36,12 @@ const create = async ({ title, content, categoryIds, userId }) => {
 
 const listAll = async () =>
   BlogPost.findAll({
-    include: [
-      {
-        model: User,
-        as: 'user',
-        attributes: ['id', 'displayName', 'email', 'image'],
-      },
-      {
-        model: Category,
-        as: 'categories',
-        attributes: ['id', 'name'],
-        through: { attributes: [] },
-      },
-    ],
+    include: includeOptions,
   });
 
 const getById = async (id) => {
   const post = await BlogPost.findByPk(id, {
-    include: [
-      {
-        model: User,
-        as: 'user',
-        attributes: ['id', 'displayName', 'email', 'image'],
-      },
-      {
-        model: Category,
-        as: 'categories',
-        attributes: ['id', 'name'],
-        through: { attributes: [] },
-      },
-    ],
+    include: includeOptions,
   });
 
   if (!post) throw new AppError(404, 'Post does not exist');
@@ -78,4 +68,15 @@ const deletePost = async ({ postId, userId }) => {
   await BlogPost.destroy({ where: { id: postId } });
 };
 
-module.exports = { create, listAll, getById, update, deletePost };
+const search = async ({ searchText }) =>
+  BlogPost.findAll({
+    where: {
+      [Op.or]: [
+        { title: { [Op.substring]: searchText } },
+        { content: { [Op.substring]: searchText } },
+      ],
+    },
+    include: includeOptions,
+  });
+
+module.exports = { create, listAll, getById, update, deletePost, search };
