@@ -2,6 +2,7 @@ const { Router } = require('express');
 
 const usersController = require('./controllers/usersController');
 const categoriesController = require('./controllers/categoriesController');
+const postsController = require('./controllers/postsController');
 const { authMiddleware } = require('./middlewares/auth');
 
 const router = Router();
@@ -12,7 +13,7 @@ router.get('/user', authMiddleware, usersController.list);
 router.get('/user/:id', authMiddleware, usersController.getById);
 router.post('/categories', authMiddleware, categoriesController.create);
 router.get('/categories', authMiddleware, categoriesController.list);
-router.post('/post', () => {});
+router.post('/post', authMiddleware, postsController.create);
 router.get('/post', () => {});
 router.get('/post/:id', () => {});
 router.put('/post/:id', () => {});

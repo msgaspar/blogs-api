@@ -13,11 +13,10 @@ describe('7 - Sua aplicação deve ter o endpoint POST `/post`', () => {
   it('Será validado que é possível cadastrar um blogpost com sucesso', async () => {
     let token;
     await frisby
-      .post(`${url}/login`,
-        {
-          email: 'lewishamilton@gmail.com',
-          password: '123456',
-        })
+      .post(`${url}/login`, {
+        email: 'lewishamilton@gmail.com',
+        password: '123456',
+      })
       .expect('status', 200)
       .then((response) => {
         const { body } = response;
@@ -52,11 +51,10 @@ describe('7 - Sua aplicação deve ter o endpoint POST `/post`', () => {
   it('Será validado que não é possível cadastrar um blogpost sem o campo `title`', async () => {
     let token;
     await frisby
-      .post(`${url}/login`,
-        {
-          email: 'lewishamilton@gmail.com',
-          password: '123456',
-        })
+      .post(`${url}/login`, {
+        email: 'lewishamilton@gmail.com',
+        password: '123456',
+      })
       .expect('status', 200)
       .then((response) => {
         const { body } = response;
@@ -75,7 +73,7 @@ describe('7 - Sua aplicação deve ter o endpoint POST `/post`', () => {
       })
       .post(`${url}/post`, {
         content: 'O campeão do ano!',
-        categoryIds: [1]
+        categoryIds: [1],
       })
       .expect('status', 400)
       .then((response) => {
@@ -87,11 +85,10 @@ describe('7 - Sua aplicação deve ter o endpoint POST `/post`', () => {
   it('Será validado que não é possível cadastrar um blogpost sem o campo `content`', async () => {
     let token;
     await frisby
-      .post(`${url}/login`,
-        {
-          email: 'lewishamilton@gmail.com',
-          password: '123456',
-        })
+      .post(`${url}/login`, {
+        email: 'lewishamilton@gmail.com',
+        password: '123456',
+      })
       .expect('status', 200)
       .then((response) => {
         const { body } = response;
@@ -122,11 +119,10 @@ describe('7 - Sua aplicação deve ter o endpoint POST `/post`', () => {
   it('Será validado que não é possível cadastrar um blogpost sem o campo `categoryIds`', async () => {
     let token;
     await frisby
-      .post(`${url}/login`,
-        {
-          email: 'lewishamilton@gmail.com',
-          password: '123456',
-        })
+      .post(`${url}/login`, {
+        email: 'lewishamilton@gmail.com',
+        password: '123456',
+      })
       .expect('status', 200)
       .then((response) => {
         const { body } = response;
@@ -145,7 +141,7 @@ describe('7 - Sua aplicação deve ter o endpoint POST `/post`', () => {
       })
       .post(`${url}/post`, {
         content: 'O campeão do ano!',
-        title: 'Fórmula 1'
+        title: 'Fórmula 1',
       })
       .expect('status', 400)
       .then((response) => {
@@ -157,11 +153,10 @@ describe('7 - Sua aplicação deve ter o endpoint POST `/post`', () => {
   it('Será validado que não é possível cadastrar um blogpost com uma categoria inexistente', async () => {
     let token;
     await frisby
-      .post(`${url}/login`,
-        {
-          email: 'lewishamilton@gmail.com',
-          password: '123456',
-        })
+      .post(`${url}/login`, {
+        email: 'lewishamilton@gmail.com',
+        password: '123456',
+      })
       .expect('status', 200)
       .then((response) => {
         const { body } = response;
@@ -179,8 +174,9 @@ describe('7 - Sua aplicação deve ter o endpoint POST `/post`', () => {
         },
       })
       .post(`${url}/post`, {
-        title: "Carros elétricos vão dominar o mundo?",
-        content: "Já é possivel encontrar diversos carros elétricos em todo o mundo, será esse nosso futuro?",
+        title: 'Carros elétricos vão dominar o mundo?',
+        content:
+          'Já é possivel encontrar diversos carros elétricos em todo o mundo, será esse nosso futuro?',
         categoryIds: [3],
       })
       .expect('status', 400)
@@ -226,7 +222,6 @@ describe('7 - Sua aplicação deve ter o endpoint POST `/post`', () => {
         title: 'Fórmula 1',
         content: 'O campeão do ano!',
         categoryIds: [1],
-
       })
       .expect('status', 401)
       .then((response) => {
