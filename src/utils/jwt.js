@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 
-const generateToken = (email) => {
-  const jwtSecret = 'EF8D6AC8B1F8129D7770F94D71749D85';
+const jwtSecret = 'EF8D6AC8B1F8129D7770F94D71749D85';
 
+const generateToken = (email) => {
   const jwtConfig = {
     expiresIn: '7d',
     algorithm: 'HS256',
@@ -11,4 +11,6 @@ const generateToken = (email) => {
   return token;
 };
 
-module.exports = { generateToken };
+const decode = (token) => jwt.decode(token, jwtSecret);
+
+module.exports = { generateToken, decode };
